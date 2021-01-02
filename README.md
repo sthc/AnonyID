@@ -6,7 +6,7 @@ The operations of AnonyID are based on the crytocurrency [Soothing Coin (STHCOIN
 
 For the details, download the latest version of white paper in [Releases](https://github.com/sthc/AnonyID/releases).
 
-This repo is dedicated to the documentation of the project including
+This repo is dedicated to the documentation of the project, including
 
 * White paper
 * Protocols 
