@@ -77,18 +77,18 @@ It is possible for a person to create multiple AnonyIDs. However, establishing a
 It should be noted that not all STHCOIN addresses are AnonyID. Only those born as AnonyIDs (Section \ref{longevity}) are legitimate AnonyIDs.
 
 \subsection{STHCOIN Message Exchange Protocol (SMEP)}
+\label{smep}
 
 Some of the attributes of AnonyID are defined by special interactions between AnonyIDs. To perform the interactions, an AnonyID sends a message to another following the STHCOIN Message Exchange Protocol (SMEP) explained below.
 
-When AnonyID X sends a message to AnonyID Y, it must conduct a special STHCOIN transaction. With the transaction, X pays Y a certain amount of STHCOINs. All the inputs of the special transaction must be the outputs (of previous transactions) destined for X, and all the outputs of the special transaction must be destined for Y. The transaction contains three or more outputs specified as follows.
+When AnonyID X sends a message to AnonyID Y, it must conduct a special STHCOIN transaction. With the transaction, X pays Y a certain amount of STHCOINs. All the inputs of the special transaction must be the outputs (of previous transactions) destined for X, and all the outputs of the special transaction must be destined for Y. The transaction contains two or more outputs specified as follows.
 
 \begin{description}
-\item[Output 0:] The amount must be $0.00011111$. This output indicates that the transaction is an SMEP message and marks be beginning of the message.
-\item[Output 1 to $n (n >= 1)$:] In each of the outputs, the amount must be $0.0kkaaabb$, where $"kk"$ (valued between $"01"$ and $"99"$) is the number corresponding to a key and "aaa" (valued between $"000"$ and $"999"$) and "bb" (valued between $"00"$ and $"99"$) are two numbers each corresponding to a different value associated with the key. Therefore, each such output carries a key-value triple. Multiple such outputs means that the message carries multiple key-value triples.
-\item[Output $n+2$:] The amount must be $0.00010111$. This output serves as another indicator of the transaction being an SMEP message and marks the end of the message. After this output, there can be at most two more outputs, as described below.
-\item[Output $n+3$:] This output is optional. If the destination address is Y, this is considered the tip to Y.
-\item[Output $n+4$ (or $n+3$ if no tip is included):] This output is also optional, and is used only when excessive coins need to be sent to back X itself. 
-\end{description}
+\item[Output 0:] The amount must be $0.00000101$, and the recipient must be a fixed address. The first version of the protocol uses {\em jSfM5ZEFM9QaohbrHz6j3GXsHdZeog6qhH}.\footnote{Other STHCOIN addresses can be used to mark the SMEP header in future versions of the protocol. It may provide an incentive for third party to get involved in the development.} This output indicates that the transaction is an SMEP message and serves as the message {\em header} marking the beginning of the message.
+\item[Output 1 to $n$:] In each of the outputs, the recipient must the receiver of the message, the amount must be $0.0kkaaabb$, where $"kk"$ (valued between $"01"$ and $"99"$) is the number corresponding to a key and "aaa" (valued between $"000"$ and $"999"$) and "bb" (valued between $"00"$ and $"99"$) are two numbers each corresponding to a different value associated with the key. Therefore, each such output carries a key-value triple. Multiple such outputs means that the message carries multiple key-value triples. The recipient of each output must be unique within the same transaction, but a transaction can carry multiple sub-messages, each to a different receiver.
+\item[Output $n+1$:] This output is also optional, and is used only when excessive coins need to be sent to back X itself. 
+\item[Output $n+i+1$:] If the previous optional output is not present, $i = 0$, otherwise $i = 1$. In this output, the amount must be $0.00000111$, and the recipient must be another fixed address, for which {\em jdjnxpQTQX6RUvz1dDRKsxJiKn6d4vmTZo} is used in the first version of the protocol.\footnote{Similar to header, other STHCOIN addresses can be used for trailer as well in the future.} This output serves as another indication of this transaction being an SMEP message and marked the end of the message as the {\em trailer}.
+\end{description}. 
 
 STHCOIN's transaction fee is set to no more than $0.00001$ ($1 \times 10^{-5}$) coins per transaction. Typically it is less than $0.0000001$ ($1 \times 10^{-7}$) coins. The smallest unit of STHCOIN is $0.000000001$ ($1 \times 10^{-8}$). One does not need to worry about spending too much on messaging.
 
@@ -231,10 +231,10 @@ The project will follow the approximate timeline given below. Minor adjustments 
 \begin{description}
 \item[Completed] -- Developing the registration web page for creating AnonyIDs.
 \item[Completed] -- Developing the web pages for STHCOIN distribution to support AnonyID operations.
-\item[2021 Q1/Q2] -- Funding raising (through ICO etc) and have STHCOIN listed on reputable cryptocurrency exchanges.
+\item[2021 Q1/Q2] -- 1) Fundraising (through ICO etc) to have STHCOIN listed on reputable cryptocurrency exchanges. 2) Buiding community.
 \item[2021 Q3] -- Completing the development of a prototype of web services for birth declaration, connectivity establishment/cancellation and attribute retrieval. 
-\item[2021 Q4] -- Completing the development of a prototype of mobile apps for birth declaration, connectivity establishment/cancellation and attribute retrieval. 
-\item[2022 Q1] -- Completing the development of a prototype of the programming API for authentication.
+\item[2021 Q4] -- Completing the development of a prototype of the programming API for authentication.
+\item[2022 Q1] -- Completing the development of a prototype of mobile apps for birth declaration, connectivity establishment/cancellation and attribute retrieval. 
 \item[2022 Q2 and after] --- Continuous development and refinement of AnonyID.
 \end{description}
 
@@ -243,6 +243,8 @@ The project will follow the approximate timeline given below. Minor adjustments 
 As explained in the preceding sections, AnonyID leverages the cryptocurrency Soothing Coin (STHCOIN) whereas STHCOIN operates on top of a permissionless blockchain. With the source code of STHCOIN open to the public at \href{https://github.com/sthc/sthcoin}{https://github.com/sthc/sthcoin}, everyone can develop a support system for AnonyID, as long as the protocol given in this white paper is followed. Given that, the support system to be developed by the Soothing Coin team will only be one of them. All the systems will be compatible to each other, because they all follow the same protocol and all the data are stored in the same blockchain. To understand that, consider the example where computers communicate with each other on the Internet owing to the fact that they all implement the same network protocols and use the same network (i.e. the Internet).
 
 There will be many different application scenarios of AnonyID. For different scenarios, the requirements of credibility calculation are likely to be different. There could be different ways to integrate AnonyID into the existing systems as well. People at different places or in different cultures may have different use habits and have different expectations.  No single solution is expected to be the panacea. Even for the same application scenario, competition will help to find the best solution. For a healthy eco system, third party development is very much needed.
+
+As explained in SMEP (Section~\ref{smep}, third party developers can use their STHCOIN addresses for the message header and/or trailer. When messages are sent, they will receive coins as rewards. That can be an incentive for third party developers to participate. In order for the system to remain universal, new STHCOIN addresses used for message header/trailer must be incorporated into the protocol for the public to follow. That means, the protocol will be revised over time, and the revisions will be published in a future version of white paper, accessible publicly at \href{https://github.com/sthc/AnonyID}{https://github.com/sthc/AnonyID}. Protocol revision and white paper maintenance will be handled by the Soothing Coin team at the beginning. As the project progresses, a consortium will likely be formed and take over the tasks.
 
 If a development team would like to offer STHCOINs for AnonyIDs to be created, negotiation can be made with the Soothing Coin team. 
 All other functionalities can be developed with zero involvement of the Soothing Coin team.
@@ -254,5 +256,27 @@ Authenticatable identities are the basis for individuals to distinguish oneself 
 The vision of AnonyID is to provide universally accessible authenticatable identities through a completely open process, and keep the identities fully separated from the identities in the real world. The immediate outcome would be to facilitate online authentication without sacrificing privacy and overcome the fake account problem. As a more far-reaching impact, a unified online society can be built on top of that, where everybody and everything is a part with a unique identity. Again, since the identity is independent from that in the real world, the unified online society will become parallel to the one in the physical world. Maybe, a new kind of "parallel universe" will come into our life?
 
 The mist needs to be cleared. The wild needs to be explored. We can only see the beginning. While we are sure that the AnonyID project will not be the end of the move toward the future cyberspace, it will certainly go down in history as a pioneer. 
+
+\section{Key Pointers}
+
+The existing major resources for the discussion and development of AnonyID so far includes:
+
+\begin{description}
+\item[AnonyID Documentation Github repo:] \href{https://github.com/sthc/AnonyID}{https://github.com/sthc/AnonyID}
+%%\item[AnonyID web site:]  \href{https://www.anonyid.net}{https://www.anonyid.net}
+\item[AnonyID forum:] \href{https://oracle.soothing.center/c/anonymous-identity-anonyid}{https://oracle.soothing.center/c/anonymous-identity-anonyid}
+\item[AnonyID Telegram group:] \href{https://t.me/AnonyID}{https://t.me/AnonyID}
+\end{description}
+
+The existing major resources for the operations of the underlying cryptocurrency STHCOIN so far includes:
+
+\begin{description}
+\item[STHCOIN web site:] \href{https://www.soothing.center}{https://www.soothing.center} or  \href{https://www.soothing.cash}{https://www.soothing.cash}
+\item[STHCOIN Github repo:] \href{https://github.com/sthc/sthcoin}{https://github.com/sthc/sthcoin}
+\item[STHCOIN Telegram group:] \href{https://t.me/sthcoin}{https://t.me/sthcoin}
+\item[Blockchain browser:] \href{http://chain.soothing.center:8000}{http://chain.soothing.center:8000}
+\end{description}
+
+The pointers will be updated as progress is made.
 
 \end{document}
