@@ -199,9 +199,18 @@ Bilateral connectivity and unilateral connectivity are similar in that they both
 
 In unilateral connectivity, since circular endorsements are not allowed, the root of the endorsement chain \footnote{An endorsement chain is formed where A endorses B, B endorses C, C endorses D and so on.}  (i.e. the very first AnonyID that endorses another AnonyID in the chain and is not endorsed by any others) is important. Its credibility would significantly impact the credibility of others in the chain. For example, the AnonyID of the creator of Soothing Coin is \textbf{jMG7wdKsw7bFVSQkGcxvjvSbKZFRwUrfmu}. The endorsement chain rooted at this AnonyID could be considered to have high credibility. Of course, over time multiple AnonyIDs may become famous and can server as the root of widely accepted endorsement chains. Another thing to consider is the length of the endorsement chain. Understandably, the further away an AnonyID is from the root in the chain, the less credibility it can derives from the root. Again, according to the six degree of segregation, we recommend that no endorsement chain should contain more than 7 AnonyIDs. In other words, the endorsement to an AnonyID that is of more than 6 connections away from the root should be disregarded. Furthermore, it is possible for an AnonyID to endorse multiple AnonyIDs. To prevent the abuse of the advantage an AnonyID has, the credibility added by endorsement should decrease or diminish if the AnonyID endorses too many others.
 
+When calculating credibility based on connectivity, as to be explained in Section~\ref{abuse}, the credibility of connected AnonyIDs must be considered as well. For example, if AnonyID X endorses Y, and Y's credibility decreases because of abuse (Section~\ref{abuse}), X's credibility should decrease as well. The best way to calculate the propagation will need to be explored during the use of the system.
+
 Activeness is about the frequency and breath of an AnonyID's activity. If social interaction is the focus, message frequency and company size can be used. If finance interaction is the focus, transaction frequency can be used. The mix can be used as well. Balance emphasizes on the finance strength, and will probably be used more for finance related examination. 
 
 It should be noted that the above discussion is merely some preliminary thoughts. The exact formulas for calculation will have to be deliberated. Some of them will have to evolve while AnonyID is in use, as many things will be new in a purely online society. While many conclusions about the society in the real world can be leveraged, much more exploration has to be done for the virtual one. Extensive study need to be performed to support the development of reasonable calculation of credibility. Additionally, different situations call for different calculation. For example, a casual forum's calculation could be more relaxed than that of a social network. For academia and industry alike, credibility calculation is an interesting issue to explore.
+
+\subsection{Abuse Detection}
+\label{abuse}
+
+When AnonyID is used for authentication, abuse could happen. Such events should be recorded and factored into credibility calculation. Should abuse be found for an AnonyID, not only its credibility be reduced, the credibility of those AnonyIDs connected with it (bilaterally or unilaterally) directly or indirectly should also be negatively impacted. Nonetheless, the further away from the abusing AnonyID in connectivity, the less impact there should be. Whether the decrease should be linear or exponential and what should be the coefficients will have to be explored.
+
+However, how abuse is reported has to be carefully considered. Abuse events can only be reported by AnonyIDs because AnonyID is the only valid identity in the system. The reports also have credibility issues, which relies on the credibility of the reporting AnonyID. A loop of impacts is thus formed: AnonyID credibility (partially) depends on abuse reports, and the credibility of abuse reports depends back on AnonyID credibility. When checking the credibility of abuse reports, the calculation needs to be careful to avoid infinitely continuous degradation. More complicated situations can arise. For example, AnonyID X reports abuses of Y and Y does the same on X. The processing of the two reports must be kept indepedent of each other.
 
 \section{The Support System for AnonyID}
 
@@ -226,7 +235,7 @@ The above functionalities would be sufficient to support the most basic operatio
 
 \section{Roadmap}
 
-The project will follow the approximate timeline given below. Minor adjustments will be made should the situation changes.
+The project will follow the approximate timeline given below. Minor adjustments will be made should the situation changes. Meanwhile, the definitions and protocols will keep being refined and augmented. 
 
 \begin{description}
 \item[Completed] -- Developing the registration web page for creating AnonyIDs.
